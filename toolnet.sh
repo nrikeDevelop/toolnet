@@ -596,7 +596,7 @@ function create_https_container(){
 
 	certbot --authenticator webroot --installer nginx --webroot-path $PATH_CONTAINER -d $SERVERNAME --email webroot@gmail.com --agree-tos --redirect
 	echo_e yellow "[?] If SSL error, try command : "
-	echo_e yellow "[?] certbot --authenticator webroot --installer nginx --webroot-path $PATH_CONTAINER -d $SERVERNAME --email webroot@gmail.com --agree-tos --redirect"
+	echo_e yellow "[?] certbot --authenticator webroot --installer nginx --webroot-path PATH_CONTAINER -d SERVERNAME --email webroot@gmail.com --agree-tos --redirect"
 	echo_e yellow "[+] Configuration https finalized"
 }
 
