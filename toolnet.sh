@@ -192,6 +192,14 @@ function add_domain(){
 		echo_e yellow "[+]  $PATH_VIEWS  creating..." 
 		mkdir -p $PATH_VIEWS
 
+		@       IN      NS      ns1
+@       IN      PTR     mail
+@       IN      MX      10 mail
+
+ns1     IN      A       149.91.104.204
+
+mail    IN      A       149.91.104.204
+
 		cd $PATH_VIEWS
 		echo '$ORIGIN '$DOMAIN'.'							>>$FILE_EXTERNAL_VIEW
 		echo '$TTL	86400'									>>$FILE_EXTERNAL_VIEW
@@ -203,8 +211,11 @@ function add_domain(){
 		echo 			'86400 )	; Negative Cache TTL'	>>$FILE_EXTERNAL_VIEW
 		echo ';'											>>$FILE_EXTERNAL_VIEW
 		echo '@	IN	NS	ns1'								>>$FILE_EXTERNAL_VIEW
-		echo '@	IN	MX	10 ns1'								>>$FILE_EXTERNAL_VIEW
+		echo '@	IN	PTR	mail'								>>$FILE_EXTERNAL_VIEW
+		echo '@	IN	MX	10 mail'							>>$FILE_EXTERNAL_VIEW
 		echo "ns1	IN	A	$IP_PUBLIC_INTRODUCED"			>>$FILE_EXTERNAL_VIEW
+		echo "mail	IN	A	$IP_PUBLIC_INTRODUCED"			>>$FILE_EXTERNAL_VIEW
+
 		echo_e green "[+] $PATH_VIEWS$FILE_EXTERNAL_VIEW  added" 
 
 		echo '$ORIGIN '$DOMAIN'.'							>>$FILE_INTERNAL_VIEW
@@ -217,8 +228,11 @@ function add_domain(){
 		echo 			'86400 )	; Negative Cache TTL'	>>$FILE_INTERNAL_VIEW
 		echo ';'											>>$FILE_INTERNAL_VIEW
 		echo '@	IN	NS	ns1'								>>$FILE_INTERNAL_VIEW
-		echo '@	IN	MX	10 ns1'								>>$FILE_INTERNAL_VIEW
+		echo '@	IN	PTR	mail'								>>$FILE_INTERNAL_VIEW
+		echo '@	IN	MX	10 mail'							>>$FILE_INTERNAL_VIEW
 		echo 'ns1	IN	A	'$IP_PRIVATE					>>$FILE_INTERNAL_VIEW
+		echo 'mail	IN	A	'$IP_PRIVATE					>>$FILE_INTERNAL_VIEW
+
 		echo_e green "[+] $PATH_VIEWS$FILE_INTERNAL_VIEW  added"
 
 		
@@ -281,6 +295,8 @@ zone "'$DOMAIN'" {
 
 		echo_e yellow "[?] Check your domain ns1.$DOMAIN" 
 		echo_e yellow "[?] ex: dig ns1.$DOMAIN @127.0.0.1" 
+		echo_e yellow "[?] ex: dig mx $DOMAIN @127.0.0.1" 
+
 
 	
 	die
