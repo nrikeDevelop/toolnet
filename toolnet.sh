@@ -192,14 +192,6 @@ function add_domain(){
 		echo_e yellow "[+]  $PATH_VIEWS  creating..." 
 		mkdir -p $PATH_VIEWS
 
-		@       IN      NS      ns1
-@       IN      PTR     mail
-@       IN      MX      10 mail
-
-ns1     IN      A       149.91.104.204
-
-mail    IN      A       149.91.104.204
-
 		cd $PATH_VIEWS
 		echo '$ORIGIN '$DOMAIN'.'							>>$FILE_EXTERNAL_VIEW
 		echo '$TTL	86400'									>>$FILE_EXTERNAL_VIEW
