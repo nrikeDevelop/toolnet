@@ -203,6 +203,7 @@ function add_domain(){
 		echo 			'86400 )	; Negative Cache TTL'	>>$FILE_EXTERNAL_VIEW
 		echo ';'											>>$FILE_EXTERNAL_VIEW
 		echo '@	IN	NS	ns1'								>>$FILE_EXTERNAL_VIEW
+		echo '@	IN	MX	10 ns1'								>>$FILE_EXTERNAL_VIEW
 		echo "ns1	IN	A	$IP_PUBLIC_INTRODUCED"			>>$FILE_EXTERNAL_VIEW
 		echo_e green "[+] $PATH_VIEWS$FILE_EXTERNAL_VIEW  added" 
 
@@ -216,6 +217,7 @@ function add_domain(){
 		echo 			'86400 )	; Negative Cache TTL'	>>$FILE_INTERNAL_VIEW
 		echo ';'											>>$FILE_INTERNAL_VIEW
 		echo '@	IN	NS	ns1'								>>$FILE_INTERNAL_VIEW
+		echo '@	IN	MX	10 ns1'								>>$FILE_INTERNAL_VIEW
 		echo 'ns1	IN	A	'$IP_PRIVATE					>>$FILE_INTERNAL_VIEW
 		echo_e green "[+] $PATH_VIEWS$FILE_INTERNAL_VIEW  added"
 
