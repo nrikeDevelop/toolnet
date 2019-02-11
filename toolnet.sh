@@ -533,6 +533,7 @@ function create_https_proxy(){
 	
 	certbot certonly --cert-name $DOMAIN --renew-by-default -a webroot -n --expand --webroot-path=$WEB_ROOT -d $CNAME.$DOMAIN
 
+
 	rm $PATH_NGINX_SITES_AVAILABLE"http_proxy."$CNAME"."$DOMAIN
 	rm $PATH_NGINX_SITES_ENABLED"http_proxy."$CNAME"."$DOMAIN
 
@@ -565,7 +566,7 @@ server {
 }' > $PATH_NGINX_SITES_AVAILABLE"https_proxy."$CNAME"."$DOMAIN
 	ln -s $PATH_NGINX_SITES_AVAILABLE"https_proxy."$CNAME"."$DOMAIN $PATH_NGINX_SITES_ENABLED
 	service nginx reload
-
+	die
 }
 
 function create_http_container(){
