@@ -434,12 +434,7 @@ function remove_cname(){
 
 }
 
-function create_https_proxy(){
-	echo "making.."
-}
-
 function create_http_proxy(){
-
 
 	DOMAIN=${args[1]}
 	CNAME=${args[2]}
@@ -522,7 +517,70 @@ server {
 }
 
 function create_https_proxy(){
-	echo "making.."
+
+	DOMAIN=${args[1]}
+	CNAME=${args[2]}
+	IP_REDIRECT=${args[3]}
+	WEB_ROOT=${args[4]}
+
+	if [ ! $DOMAIN ]
+	then
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		die();
+	fi
+
+	if [ ! $CNAME ]
+	then
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		die();
+	fi
+
+	if [ ! $IP_REDIRECT ]
+	then
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		die();
+	fi
+
+	if [ ! $WEB_ROOT ]
+	then
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		die();
+	fi
+
+	create_http_proxy()
+	
+	certbot certonly --cert-name $DOMAIN --renew-by-default -a webroot -n --expand --webroot-path=$WEB_ROOT -d $CNAME.$DOMAIN
+
+	rm $PATH_NGINX_SITES_AVAILABLE"http_proxy."$CNAME"."$DOMAIN
+
+echo '
+server {
+        listen         80;
+        server_name '$CNAME'.'$DOMAIN';
+        #return         301 https://$host$request_uri;
+        return 301 		https://'$CNAME'.'$DOMAIN';
+}
+
+server {
+        listen 443;
+        server_name '$CNAME'.'$DOMAIN';
+
+        ssl_certificate /etc/letsencrypt/live/'$DOMAIN'/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/'$DOMAIN'/privkey.pem;
+        ssl on;
+
+        location / {
+                proxy_set_header Host  $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+
+                proxy_pass http://'$IP_REDIRECT';
+        }
+}' > $PATH_NGINX_SITES_AVAILABLE"https_proxy."$CNAME"."$DOMAIN
+
+service nginx restart
+
 }
 
 function create_http_container(){
