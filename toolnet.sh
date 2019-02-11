@@ -510,10 +510,10 @@ server {
 		echo_e yellow "[+] $PATH_NGINX_SITES_ENABLED""http_proxy.$SERVERNAME created"
 		echo_e green "[+] nginx has been configured"
 	
-		die
+		#die
 		fi
 	done
-	echo_e red "[-] Domain is not exist in your DNS"
+	#echo_e red "[-] Domain is not exist in your DNS"
 }
 
 function create_https_proxy(){
