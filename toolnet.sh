@@ -523,31 +523,13 @@ function create_https_proxy(){
 	IP_REDIRECT=${args[3]}
 	WEB_ROOT=${args[4]}
 
-	if [ ! $DOMAIN ]
-	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
-		die();
-	fi
-
-	if [ ! $CNAME ]
-	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
-		die();
-	fi
-
-	if [ ! $IP_REDIRECT ]
-	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
-		die();
-	fi
-
 	if [ ! $WEB_ROOT ]
 	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
-		die();
+		echo_e red "[-] introduce all data DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		die
 	fi
 
-	create_http_proxy()
+	create_http_proxy $DOMAIN $CNAME $IP_REDIRECT
 	
 	certbot certonly --cert-name $DOMAIN --renew-by-default -a webroot -n --expand --webroot-path=$WEB_ROOT -d $CNAME.$DOMAIN
 
@@ -743,7 +725,7 @@ function init_menu(){
 			create_http_proxy
 			die;;
 		"--create-https-proxy")
-			
+			create_https_proxy			
 			die;;
 		"--create-http-container")
 			create_http_container
