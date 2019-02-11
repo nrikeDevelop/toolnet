@@ -534,6 +534,9 @@ function create_https_proxy(){
 	certbot certonly --cert-name $DOMAIN --renew-by-default -a webroot -n --expand --webroot-path=$WEB_ROOT -d $CNAME.$DOMAIN
 
 	rm $PATH_NGINX_SITES_AVAILABLE"http_proxy."$CNAME"."$DOMAIN
+	rm $PATH_NGINX_SITES_ENABLED"http_proxy."$CNAME"."$DOMAIN
+
+
 
 echo '
 server {
@@ -560,8 +563,8 @@ server {
                 proxy_pass http://'$IP_REDIRECT';
         }
 }' > $PATH_NGINX_SITES_AVAILABLE"https_proxy."$CNAME"."$DOMAIN
-
-service nginx restart
+	ln -s $PATH_NGINX_SITES_AVAILABLE"https_proxy."$CNAME"."$DOMAIN $PATH_NGINX_SITES_ENABLED
+	service nginx reload
 
 }
 
@@ -632,8 +635,6 @@ server{
 		service nginx reload
 		echo_e green "[+] nginx configurated"
 		echo_e green "[+] Visit http://$SERVERNAME"
-
-
 
 }
 
