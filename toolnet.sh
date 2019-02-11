@@ -608,6 +608,8 @@ happy coding
 		echo_e green "[+] $PATH_CONTAINER has been created"
 	fi
 
+chown -R www-data:www-data $PATH_CONTAINER
+
 VERSION_FPM=$(php --version | grep  "PHP 7" | tr -s " " "_"| cut -d "_" -f 2 | cut -d"." -f 1,2);
 echo '
 server{
@@ -643,8 +645,6 @@ function create_https_container(){
 	create_http_container
 	SERVERNAME=${args[1]}
 	PATH_CONTAINER=${args[2]}
-
-	echo $PATH_CONTAINER
 
 	certbot --authenticator webroot --installer nginx --webroot-path $PATH_CONTAINER -d $SERVERNAME --email webroot@gmail.com --agree-tos --redirect
 	echo_e yellow "[?] If SSL error, try command : "
