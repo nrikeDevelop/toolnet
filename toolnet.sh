@@ -525,25 +525,25 @@ function create_https_proxy(){
 
 	if [ ! $DOMAIN ]
 	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
 		die();
 	fi
 
 	if [ ! $CNAME ]
 	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
 		die();
 	fi
 
 	if [ ! $IP_REDIRECT ]
 	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
 		die();
 	fi
 
 	if [ ! $WEB_ROOT ]
 	then
-		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT"
+		echo_e red "[-] Introduce DOMAIN CNAME IP_REDIRECT WEB_ROOT";
 		die();
 	fi
 
